@@ -24,7 +24,7 @@ public class UsuarioService implements IUsuarioService {
         return usuarioRepository.findAll();
     }
 
-    @Override 
+    @Override
     public Usuario guardar(Usuario usuario) {
         return null;
     }
