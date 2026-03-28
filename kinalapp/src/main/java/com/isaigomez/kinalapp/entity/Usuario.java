@@ -28,7 +28,7 @@ public class    Usuario {
 
     public Usuario(int codigoUsuario, String username, String password, String email, String rol, int estado) {
         this.codigoUsuario = codigoUsuario;
-        this.username = username; 
+        this.username = username;
         this.password = password;
         this.email = email;
         this.rol = rol;
@@ -62,7 +62,7 @@ public class    Usuario {
     public String getEmail() {
         return email;
     }
-
+ 
     public void setEmail(String email) {
         this.email = email;
     }
