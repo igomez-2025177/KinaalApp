@@ -14,13 +14,13 @@ public class ClienteController {
 
     public ClienteController(ClienteRepository repo) {
         this.repo = repo;
-    }
+    }  
 
     @GetMapping
     public List<Cliente> listar() {
         return repo.findAll();
     }
- 
+
     @PostMapping
     public Cliente guardar(@RequestBody Cliente c) {
         return repo.save(c);
