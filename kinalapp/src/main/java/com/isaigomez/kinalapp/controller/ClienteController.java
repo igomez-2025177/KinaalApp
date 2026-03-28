@@ -32,7 +32,7 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
         cliente.setDPICliente(dpi);
-        return ResponseEntity.ok(repo.save(cliente)); 
+        return ResponseEntity.ok(repo.save(cliente));
     }
 
     @GetMapping("/{dpi}")
@@ -41,4 +41,4 @@ public class ClienteController {
                 .map(cliente -> ResponseEntity.ok(cliente))
                 .orElse(ResponseEntity.notFound().build());
     }
-}
+} 
