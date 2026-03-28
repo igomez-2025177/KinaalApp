@@ -28,7 +28,7 @@ public interface IClienteService {
     // Método que actualiza un cliente
     Cliente actualizar(String dpi, Cliente cliente);
     /*
-     * Parámetros:
+     * Parámetros ss:
      *  - dpi: DPI del cliente a actualizar
      *  - cliente: Objeto con los datos nuevos
      * Retorna un objeto de tipo Cliente ya actualizado
