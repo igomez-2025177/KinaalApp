@@ -81,7 +81,7 @@ public class Venta {
 
     public void setDpiCliente(String dpiCliente) {
         this.dpiCliente = dpiCliente;
-    } 
+    }
 
     public int getCodigoUsuario() {
         return codigoUsuario;
