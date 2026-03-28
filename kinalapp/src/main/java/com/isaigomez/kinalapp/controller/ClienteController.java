@@ -14,7 +14,7 @@ public class ClienteController {
 
     public ClienteController(ClienteRepository repo) {
         this.repo = repo;
-    }  
+    }
 
     @GetMapping
     public List<Cliente> listar() {
