@@ -1,3 +1,4 @@
+
 package com.isaigomez.kinalapp.repository;
 
 import com.isaigomez.kinalapp.entity.Cliente;
