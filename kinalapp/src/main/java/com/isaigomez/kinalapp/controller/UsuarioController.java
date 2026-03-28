@@ -40,6 +40,5 @@ public class UsuarioController {
         return repo.findById(id)
                 .map(usuario -> ResponseEntity.ok(usuario))
                 .orElse(ResponseEntity.notFound().build());
-    }
+    } 
 }
- 
