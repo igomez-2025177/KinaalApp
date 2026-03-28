@@ -38,7 +38,7 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public Usuario actualizar(int id, Usuario usuario) {
         return null;
-    }
+    } 
 
     @Override
     public void eliminar(int id) {
