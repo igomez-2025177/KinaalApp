@@ -57,7 +57,7 @@ public class Venta {
 
     public void setFechaVenta(Date fechaVenta) {
         this.fechaVenta = fechaVenta;
-    } 
+    }
 
     public double getTotal() {
         return total;
@@ -81,7 +81,7 @@ public class Venta {
 
     public void setDpiCliente(String dpiCliente) {
         this.dpiCliente = dpiCliente;
-    }
+    } 
 
     public int getCodigoUsuario() {
         return codigoUsuario;
