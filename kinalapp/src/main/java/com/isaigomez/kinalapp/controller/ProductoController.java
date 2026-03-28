@@ -16,7 +16,7 @@ public class ProductoController {
         this.repo = repo;
     }
 
-    @GetMapping
+    @GetMapping  
     public List<Producto> listar() {
         return repo.findAll();
     }
@@ -35,7 +35,7 @@ public class ProductoController {
         return ResponseEntity.ok(repo.save(producto));
     }
 
-    @GetMapping("/{id}") 
+    @GetMapping("/{id}")
     public ResponseEntity<Producto> buscarPorId(@PathVariable int id) {
         return repo.findById(id)
                 .map(producto -> ResponseEntity.ok(producto))
