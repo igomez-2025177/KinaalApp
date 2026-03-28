@@ -9,7 +9,7 @@ public interface IClienteService {
     /*
      * Interfaz: Es un contrato que dice QUÉ métodos debe tener
      * cualquier servicio de Clientes. No tiene implementación,
-     * solo definición de los métodos.
+     * solo definición de los métodos .
      */
 
     // Método que devuelve una lista de todos los clientes
