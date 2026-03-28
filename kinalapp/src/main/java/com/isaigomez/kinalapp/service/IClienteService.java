@@ -9,13 +9,13 @@ public interface IClienteService {
     /*
      * Interfaz: Es un contrato que dice QUÉ métodos debe tener
      * cualquier servicio de Clientes. No tiene implementación,
-     * solo definición de los métodos.
+     * solo definición de los métodos .
      */
 
     // Método que devuelve una lista de todos los clientes
     List<Cliente> listarTodos();
     /*
-     * List<Cliente> devuelve una lista de objetos de la entidad Cliente
+     *  List<Cliente> devuelve una lista de objetos de la entidad Cliente
      */
 
     // Método que guarda un Cliente en la BD
@@ -28,7 +28,7 @@ public interface IClienteService {
     // Método que actualiza un cliente
     Cliente actualizar(String dpi, Cliente cliente);
     /*
-     * Parámetros:
+     * Parámetros ss:
      *  - dpi: DPI del cliente a actualizar
      *  - cliente: Objeto con los datos nuevos
      * Retorna un objeto de tipo Cliente ya actualizado
