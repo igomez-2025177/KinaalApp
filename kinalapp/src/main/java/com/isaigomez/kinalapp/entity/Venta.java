@@ -57,7 +57,7 @@ public class Venta {
 
     public void setFechaVenta(Date fechaVenta) {
         this.fechaVenta = fechaVenta;
-    }
+    } 
 
     public double getTotal() {
         return total;
