@@ -34,7 +34,7 @@ public class ClienteService implements IClienteService{
      */
     public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
-        //Asignar el repositorio a nuestra Variable de clase 
+        //Asignar el repositorio a nuestra Variable de clase
     }
 
     //Indica que se esta implementando un metodo de interfaz
@@ -43,7 +43,7 @@ public class ClienteService implements IClienteService{
     @Transactional(readOnly = true)
     public List<Cliente> listarTodos() {
         return clienteRepository.findAll();
-        //findAll() es un metodo de spring que hace el select * from Clientes
+        //findAll() es un metodo de spring que hace el select * from Clientes 
         //Este metodo de JPARepository
     }
 
