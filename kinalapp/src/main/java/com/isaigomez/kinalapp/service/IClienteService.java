@@ -15,7 +15,7 @@ public interface IClienteService {
     // Método que devuelve una lista de todos los clientes
     List<Cliente> listarTodos();
     /*
-     * List<Cliente> devuelve una lista de objetos de la entidad Cliente
+     *  List<Cliente> devuelve una lista de objetos de la entidad Cliente
      */
 
     // Método que guarda un Cliente en la BD
