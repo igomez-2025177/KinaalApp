@@ -30,7 +30,7 @@ public class UsuarioController {
     public ResponseEntity<Usuario> actualizar(@PathVariable int id, @RequestBody Usuario usuario) {
         if (!repo.existsById(id)) {
             return ResponseEntity.notFound().build();
-        }
+        }  
         usuario.setCodigoUsuario(id);
         return ResponseEntity.ok(repo.save(usuario));
     }
@@ -40,5 +40,5 @@ public class UsuarioController {
         return repo.findById(id)
                 .map(usuario -> ResponseEntity.ok(usuario))
                 .orElse(ResponseEntity.notFound().build());
-    } 
+    }
 }
