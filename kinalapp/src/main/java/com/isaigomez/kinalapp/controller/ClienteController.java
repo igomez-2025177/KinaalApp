@@ -20,7 +20,7 @@ public class ClienteController {
     public List<Cliente> listar() {
         return repo.findAll();
     }
-
+ 
     @PostMapping
     public Cliente guardar(@RequestBody Cliente c) {
         return repo.save(c);
@@ -41,4 +41,4 @@ public class ClienteController {
                 .map(cliente -> ResponseEntity.ok(cliente))
                 .orElse(ResponseEntity.notFound().build());
     }
-} 
+}
