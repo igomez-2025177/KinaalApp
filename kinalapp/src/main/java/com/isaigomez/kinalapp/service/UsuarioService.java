@@ -24,7 +24,7 @@ public class UsuarioService implements IUsuarioService {
         return usuarioRepository.findAll();
     }
 
-    @Override
+    @Override 
     public Usuario guardar(Usuario usuario) {
         return null;
     }
@@ -33,7 +33,7 @@ public class UsuarioService implements IUsuarioService {
     @Transactional(readOnly = true)
     public Optional<Usuario> buscarPorId(int id) {
         return Optional.empty();
-    } 
+    }
 
     @Override
     public Usuario actualizar(int id, Usuario usuario) {
