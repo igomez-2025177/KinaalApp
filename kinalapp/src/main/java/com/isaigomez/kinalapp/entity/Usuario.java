@@ -34,7 +34,7 @@ public class    Usuario {
         this.rol = rol;
         this.estado = estado;
     }
- 
+
     public int getCodigoUsuario() {
         return codigoUsuario;
     }
