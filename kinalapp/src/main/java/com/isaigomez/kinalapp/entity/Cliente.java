@@ -6,9 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/**
- * Agregaron JPA
- */
 @Entity
 @Table(name = "clientes")
 public class Cliente  {
