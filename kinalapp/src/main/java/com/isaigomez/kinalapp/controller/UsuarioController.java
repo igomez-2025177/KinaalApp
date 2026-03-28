@@ -19,7 +19,7 @@ public class UsuarioController {
     @GetMapping
     public List<Usuario> listar() {
         return repo.findAll();
-    }  
+    }
 
     @PostMapping
     public Usuario guardar(@RequestBody Usuario u) {
