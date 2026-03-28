@@ -33,7 +33,7 @@ public class UsuarioService implements IUsuarioService {
     @Transactional(readOnly = true)
     public Optional<Usuario> buscarPorId(int id) {
         return Optional.empty();
-    }
+    } 
 
     @Override
     public Usuario actualizar(int id, Usuario usuario) {
@@ -42,7 +42,7 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public void eliminar(int id) {
- 
+
     }
 
     @Override
