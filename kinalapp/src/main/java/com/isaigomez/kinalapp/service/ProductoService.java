@@ -45,7 +45,7 @@ public class ProductoService implements IProductoService {
         //findAll() es un metodo de spring que hace el select * from productos
         //Este metodo es de JpaRepository
     }
-  
+
     @Override
     public Producto guardar(Producto producto) {
         return productoRepository.save(producto);
