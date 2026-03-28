@@ -36,8 +36,8 @@ public class ClienteController {
     }
 
     @GetMapping("/{dpi}")
-    public ResponseEntity<Cliente> buscarPorDpi(@PathVariable String dpi) { 
-        return repo.findById(dpi)
+    public ResponseEntity<Cliente> buscarPorDpi(@PathVariable String dpi) {
+        return repo.findById(dpi) 
                 .map(cliente -> ResponseEntity.ok(cliente))
                 .orElse(ResponseEntity.notFound().build());
     }
