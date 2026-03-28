@@ -60,7 +60,7 @@ public class ProductoService implements IProductoService {
     @Override
     public Producto actualizar(int id, Producto producto) {
         producto.setCodigoProducto(id);
-        return productoRepository.save(producto);
+        return productoRepository.save(producto); 
     }
 
     @Override
