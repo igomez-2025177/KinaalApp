@@ -16,7 +16,7 @@ public class ProductoController {
         this.repo = repo;
     }
 
-    @GetMapping  
+    @GetMapping
     public List<Producto> listar() {
         return repo.findAll();
     }
