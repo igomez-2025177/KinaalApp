@@ -33,7 +33,7 @@ public class ProductoController {
         }
         producto.setCodigoProducto(id);
         return ResponseEntity.ok(repo.save(producto));
-    }
+    } 
 
     @GetMapping("/{id}")
     public ResponseEntity<Producto> buscarPorId(@PathVariable int id) {
