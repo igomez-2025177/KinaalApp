@@ -1,4 +1,8 @@
 package com.isaigomez.kinalapp.repository;
 
-public interface ProductoRepository {
+import com.isaigomez.kinalapp.entity.Producto;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductoRepository extends JpaRepository<Producto, Integer> {
+
 }
