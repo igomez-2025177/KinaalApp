@@ -40,10 +40,10 @@ public class ClienteService implements IClienteService{
     //Indica que se esta implementando un metodo de interfaz
     @Override
     // Optimizar la consulta, solo lectura,para que no bloquee la BD
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) 
     public List<Cliente> listarTodos() {
         return clienteRepository.findAll();
-        //findAll() es un metodo de spring que hace el select * from Clientes 
+        //findAll() es un metodo de spring que hace el select * from Clientes
         //Este metodo de JPARepository
     }
 
