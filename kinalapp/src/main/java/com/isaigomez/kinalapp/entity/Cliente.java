@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**
- * Isai
+ * I
  */
 @Entity
 @Table(name = "clientes")
