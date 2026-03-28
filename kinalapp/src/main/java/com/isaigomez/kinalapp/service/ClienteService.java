@@ -23,7 +23,7 @@ public class ClienteService implements IClienteService{
     /*
     * private: Solo es accesible dentro de la misma clase
     * final: No pude cambiar, es constante
-    * ClienteRepository: El repositorio para acceder a la BD 
+    * ClienteRepository: El repositorio para acceder a la BD
     * Inyeccion de Dependencia ya que Spring nos da el repositorio
      */
     private final ClienteRepository clienteRepository;
@@ -34,7 +34,7 @@ public class ClienteService implements IClienteService{
      */
     public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
-        //Asignar el repositorio a nuestra Variable de clase
+        //Asignar el repositorio a nuestra Variable de clase 
     }
 
     //Indica que se esta implementando un metodo de interfaz
