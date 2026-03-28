@@ -1,10 +1,14 @@
 package com.isaigomez.kinalapp.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Isai
+ */
 @Entity
 @Table(name = "clientes")
 public class Cliente  {
