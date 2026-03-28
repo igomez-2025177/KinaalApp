@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**
- * I
+ * Agregaron JPA
  */
 @Entity
 @Table(name = "clientes")
