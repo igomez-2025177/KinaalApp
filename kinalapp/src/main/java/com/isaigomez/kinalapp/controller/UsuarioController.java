@@ -19,7 +19,7 @@ public class UsuarioController {
     @GetMapping
     public List<Usuario> listar() {
         return repo.findAll();
-    }
+    }  
 
     @PostMapping
     public Usuario guardar(@RequestBody Usuario u) {
@@ -30,7 +30,7 @@ public class UsuarioController {
     public ResponseEntity<Usuario> actualizar(@PathVariable int id, @RequestBody Usuario usuario) {
         if (!repo.existsById(id)) {
             return ResponseEntity.notFound().build();
-        }  
+        }
         usuario.setCodigoUsuario(id);
         return ResponseEntity.ok(repo.save(usuario));
     }
