@@ -32,12 +32,12 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
         cliente.setDPICliente(dpi);
-        return ResponseEntity.ok(repo.save(cliente));
+        return ResponseEntity.ok(repo.save(cliente)); 
     }
 
     @GetMapping("/{dpi}")
     public ResponseEntity<Cliente> buscarPorDpi(@PathVariable String dpi) {
-        return repo.findById(dpi) 
+        return repo.findById(dpi)
                 .map(cliente -> ResponseEntity.ok(cliente))
                 .orElse(ResponseEntity.notFound().build());
     }
