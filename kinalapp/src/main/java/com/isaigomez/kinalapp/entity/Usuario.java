@@ -34,7 +34,7 @@ public class    Usuario {
         this.rol = rol;
         this.estado = estado;
     }
-
+ 
     public int getCodigoUsuario() {
         return codigoUsuario;
     }
@@ -62,7 +62,7 @@ public class    Usuario {
     public String getEmail() {
         return email;
     }
- 
+
     public void setEmail(String email) {
         this.email = email;
     }
