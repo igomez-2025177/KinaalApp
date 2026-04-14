@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Venta</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <h2>KinalApp</h2>
+        <nav>
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/clientes-view}">Clientes</a>
+            <a th:href="@{/usuarios-view}">Usuarios</a>
+            <a th:href="@{/productos-view}">Productos</a>
+            <a th:href="@{/ventas-view}">Ventas</a>
+            <a th:href="@{/detalleventa-view}" class="active">Detalle Venta</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <section class="card">
+            <h1>Detalle Venta</h1>
+
+            <form class="form-grid">
+                <input type="number" placeholder="Código Detalle Venta">
+                <input type="number" placeholder="Cantidad">
+                <input type="number" step="0.01" placeholder="Precio Unitario">
+                <input type="number" step="0.01" placeholder="Subtotal">
+                <input type="number" placeholder="Código Producto">
+                <input type="number" placeholder="Código Venta">
+                <button type="submit">Guardar Detalle</button>
+            </form>
+        </section>
+    </main>
+</div>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>
