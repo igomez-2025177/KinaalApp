@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KinalApp</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <h2>KinalApp</h2>
+        <nav>
+            <a th:href="@{/clientes-view}">Clientes</a>
+            <a th:href="@{/usuarios-view}">Usuarios</a>
+            <a th:href="@{/productos-view}">Productos</a>
+            <a th:href="@{/ventas-view}">Ventas</a>
+            <a th:href="@{/detalleventa-view}">Detalle Venta</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <div class="hero-card">
+            <h1>Bienvenido a KinalApp</h1>
+            <p>Sistema de gestión de clientes, usuarios, productos, ventas y detalle de ventas.</p>
+        </div>
+    </main>
+</div>
+
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>
