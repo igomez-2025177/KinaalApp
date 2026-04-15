@@ -41,4 +41,13 @@ public class ClienteController {
                 .map(cliente -> ResponseEntity.ok(cliente))
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{dpi}")
+    public ResponseEntity<Void> eliminar(@PathVariable String dpi) {
+        if (!repo.existsById(dpi)) {
+            return ResponseEntity.notFound().build();
+        }
+        repo.deleteById(dpi);
+        return ResponseEntity.noContent().build();
+    }
 }
