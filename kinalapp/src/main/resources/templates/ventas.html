@@ -26,8 +26,14 @@
             <form class="form-grid" id="ventaForm">
                 <input type="number" id="codigoVenta" placeholder="Código Venta" required>
                 <input type="date" id="fechaVenta" required>
-                <input type="number" step="0.01" id="totalVenta" placeholder="Total" required>
-                <input type="number" id="estadoVenta" placeholder="Estado" required>
+                <input type="number" step="0.01" min="0" id="totalVenta" placeholder="Total en quetzales" required>
+
+                <select id="estadoVenta" required>
+                    <option value="">Seleccione estado</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+
                 <input type="text" id="dpiClienteVenta" placeholder="DPI Cliente" required>
                 <input type="number" id="codigoUsuarioVenta" placeholder="Código Usuario" required>
                 <button type="submit" id="btnGuardarVenta">Guardar Venta</button>
