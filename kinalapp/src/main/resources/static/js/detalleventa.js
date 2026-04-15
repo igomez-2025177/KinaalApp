@@ -71,8 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <tr>
                     <td>${d.codigoDetalleVenta}</td>
                     <td>${d.cantidad}</td>
-                    <td>${d.precioUnitario}</td>
-                    <td>${d.subtotal}</td>
+                    <td>${formatearQuetzales(d.precioUnitario)}</td>
+                    <td>${formatearQuetzales(d.subtotal)}</td>
                     <td>${d.codigoProducto}</td>
                     <td>${d.codigoVenta}</td>
                     <td>
@@ -98,8 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <tr>
                         <td>${d.codigoDetalleVenta}</td>
                         <td>${d.cantidad}</td>
-                        <td>${d.precioUnitario}</td>
-                        <td>${d.subtotal}</td>
+                        <td>${formatearQuetzales(d.precioUnitario)}</td>
+                        <td>${formatearQuetzales(d.subtotal)}</td>
                         <td>${d.codigoProducto}</td>
                         <td>${d.codigoVenta}</td>
                         <td>
@@ -112,6 +112,10 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             console.error("Error al cargar detalle venta:", error);
         }
+    }
+
+    function formatearQuetzales(valor) {
+        return "Q " + Number(valor).toFixed(2);
     }
 
     function resetFormulario() {
