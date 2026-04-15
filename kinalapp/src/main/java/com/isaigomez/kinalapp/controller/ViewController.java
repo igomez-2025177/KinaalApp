@@ -8,6 +8,21 @@ public class ViewController {
 
     @GetMapping("/")
     public String inicio() {
+        return "login";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/registro")
+    public String registro() {
+        return "registro";
+    }
+
+    @GetMapping("/index")
+    public String index() {
         return "index";
     }
 
