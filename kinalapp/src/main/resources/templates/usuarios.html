@@ -23,18 +23,45 @@
         <section class="card">
             <h1>Usuarios</h1>
 
-            <form class="form-grid">
-                <input type="number" placeholder="Código Usuario">
-                <input type="text" placeholder="Username">
-                <input type="password" placeholder="Password">
-                <input type="email" placeholder="Email">
-                <input type="text" placeholder="Rol">
-                <input type="number" placeholder="Estado">
-                <button type="submit">Guardar Usuario</button>
+            <form class="form-grid" id="usuarioForm">
+                <input type="number" id="codigoUsuario" placeholder="Código Usuario" required>
+                <input type="text" id="usernameUsuario" placeholder="Username" required>
+                <input type="password" id="passwordUsuario" placeholder="Password" required>
+                <input type="email" id="emailUsuario" placeholder="Email" required>
+                <input type="text" id="rolUsuario" placeholder="Rol" required>
+                <input type="number" id="estadoUsuario" placeholder="Estado" required>
+                <button type="submit" id="btnGuardarUsuario">Guardar Usuario</button>
             </form>
+        </section>
+
+        <section class="card">
+            <h2>Buscar Usuario por Código</h2>
+            <div class="form-grid">
+                <input type="number" id="buscarCodigoUsuario" placeholder="Ingrese código a buscar">
+                <button type="button" id="btnBuscarUsuario">Buscar Usuario</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Listado de Usuarios</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="tablaUsuarios"></tbody>
+            </table>
         </section>
     </main>
 </div>
-<script th:src="@{/js/app.js}"></script>
+
+<script th:src="@{/js/usuarios.js}"></script>
 </body>
 </html>
