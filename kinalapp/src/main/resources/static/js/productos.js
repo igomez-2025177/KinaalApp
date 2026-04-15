@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function formatearQuetzales(precio) {
-        return `Q ${Number(precio).toFixed(2)}`;
+        return "Q " + Number(precio).toFixed(2);
     }
 
     function resetFormulario() {
