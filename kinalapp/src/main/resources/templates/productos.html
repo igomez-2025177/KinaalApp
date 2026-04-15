@@ -26,9 +26,15 @@
             <form class="form-grid" id="productoForm">
                 <input type="number" id="codigoProducto" placeholder="Código Producto" required>
                 <input type="text" id="nombreProducto" placeholder="Nombre Producto" required>
-                <input type="number" step="0.01" id="precioProducto" placeholder="Precio" required>
+                <input type="number" step="0.01" min="0" id="precioProducto" placeholder="Precio en quetzales" required>
                 <input type="number" id="stockProducto" placeholder="Stock" required>
-                <input type="number" id="estadoProducto" placeholder="Estado" required>
+
+                <select id="estadoProducto" required>
+                    <option value="">Seleccione estado</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+
                 <button type="submit" id="btnGuardarProducto">Guardar Producto</button>
             </form>
         </section>
