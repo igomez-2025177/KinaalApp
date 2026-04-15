@@ -1,0 +1,73 @@
+[33mcc3b0a0[m[33m ([m[1;31morigin/develop[m[33m)[m Merge pull request #35 from igomez-2025177/igomez-2025177
+[33m05b7057[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32migomez-2025177[m[33m, [m[1;31morigin/igomez-2025177[m[33m)[m fix: agregar estilos para selector en formularios de productos
+[33mc2fc9ee[m Merge pull request #34 from igomez-2025177/igomez-2025177
+[33m9446392[m fix: mostrar precio en quetzales y estado como activo o inactivo en productos
+[33m9a71944[m Merge pull request #33 from igomez-2025177/igomez-2025177
+[33m1d2058d[m fix: cambiar estado de productos a selector y ajustar campo precio
+[33m8a838fe[m Merge pull request #32 from igomez-2025177/igomez-2025177
+[33m71fdeb3[m fix: agregar estilos para select en formularios
+[33mcf1aec5[m Merge pull request #31 from igomez-2025177/igomez-2025177
+[33m4009740[m fix: proteger creacion y eliminacion de administradores en usuarios
+[33m5d6cfa0[m Merge pull request #30 from igomez-2025177/igomez-2025177
+[33m0f308c4[m fix: mejorar vista de usuarios con roles predefinidos y estado tipo selector
+[33m5059ea7[m Merge pull request #29 from igomez-2025177/igomez-2025177
+[33m8ce085e[m fix: agregar estilos para selector de estado en formularios
+[33mbed63a2[m Merge pull request #28 from igomez-2025177/igomez-2025177
+[33mfe8e73f[m fix: mostrar estado de clientes como activo o inactivo en la tabla
+[33m4141218[m Merge pull request #27 from igomez-2025177/igomez-2025177
+[33m81e8729[m fix: cambiar estado de clientes a selector activo e inactivo
+[33me0415d2[m Merge pull request #26 from igomez-2025177/igomez-2025177
+[33m5da425a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Merge pull request #25 from igomez-2025177/igomez-2025177
+[33me1f4e0e[m feat: crear logica js para detalle venta
+[33m6bd0906[m Merge pull request #24 from igomez-2025177/igomez-2025177
+[33m438b8dd[m fix: corregir vista de detalle venta agregando formulario tabla y busqueda
+[33m7d33508[m Merge pull request #23 from igomez-2025177/develop
+[33m9c5d189[m fix: ajustar crud de detalle venta en controller
+[33mbcc106b[m Merge pull request #22 from igomez-2025177/igomez-2025177
+[33m301c894[m feat: crear logica js para ventas
+[33mfddd8d3[m Merge pull request #21 from igomez-2025177/igomez-2025177
+[33m423867d[m fix: corregir vista de ventas agregando formulario tabla y busqueda
+[33md1d6938[m Merge pull request #20 from igomez-2025177/igomez-2025177
+[33m7f50b46[m fix: ajustar crud de ventas en VentaController
+[33m2e985e4[m Merge pull request #19 from igomez-2025177/igomez-2025177
+[33m1fde560[m feat: crear logica js para productos
+[33m1a5d1fc[m Merge pull request #18 from igomez-2025177/igomez-2025177
+[33m3c39dd4[m fix: corregir vista de productos agregando formulario tabla y busqueda
+[33m1d2e4ae[m Merge pull request #17 from igomez-2025177/igomez-2025177
+[33m6faf683[m fix: agregar endpoint delete en ProductoController
+[33m842f753[m Merge pull request #16 from igomez-2025177/igomez-2025177
+[33m94405d5[m feat: crear logica js para usuarios
+[33meb6610b[m Merge pull request #15 from igomez-2025177/igomez-2025177
+[33m6b2369c[m fix: agregar endpoint delete en UsuarioController
+[33m51dbef3[m Merge pull request #13 from igomez-2025177/igomez-2025177
+[33m1e895d4[m feat: crear logica js para clientes
+[33mfac35df[m fix: agregar eliminacion de clientes en controller y actualizar vista clientes
+[33mef5feba[m fix: reparar estructura HTML de la vista de clientes
+[33mc5c036b[m fix: corregir problemas con el css
+[33mbe8d70a[m fix: corregir problemas de estilos del frontend y diseno para tablas y cambiar el server.port
+[33m10a676f[m fix: arreglas problemas script base del frontend, y con el css/style.css
+[33mfe07b73[m fix: limpiar y recompilar proyecto para aplicar cambios del controlador
+[33m709651c[m fix: corregir dependencias web en pom.xml
+[33md5879d8[m fix: cambiar puerto de la aplicacion por conflicto en 8021
+[33m7f64cff[m fix: corregir estilos del frontend y agregar diseno para tablas
+[33md9566b5[m Merge pull request #14 from igomez-2025177/
+[33md4ffa3c[m fix: corregir vista de clientes agregando tabla de listado
+[33m5d54314[m feat: agregar script base del frontend
+[33mdb3e85e[m Merge pull request #12 from igomez-2025177/igomez-2025177
+[33m195ad36[m feat: agregar estilos base del frontend
+[33mb4e3207[m Merge pull request #11 from igomez-2025177/igomez-2025177
+[33m104dce6[m feat: crear vista de detalle venta
+[33m9f7386e[m Merge pull request #10 from igomez-2025177/igomez-2025177
+[33md5849c8[m feat: crear vista de ventas
+[33ma3ee191[m Merge pull request #9 from igomez-2025177/igomez-2025177
+[33m4097216[m Merge pull request #8 from igomez-2025177/igomez-2025177
+[33mede0f5a[m feat: crear vista de productos
+[33m3d04d3c[m feat: crear vista de usuarios
+[33m9ab7abd[m Merge pull request #7 from igomez-2025177/igomez-2025177
+[33m1e369e5[m feat: crear vista de clientes
+[33m6f60cbc[m Merge pull request #6 from igomez-2025177/igomez-2025177
+[33mc99eddf[m feat: crear vista principal index
+[33m23f4730[m Merge pull request #5 from igomez-2025177/igomez-2025177
+[33m532fab8[m fix: agregar dependencia de Thymeleaf en pom.xml
+[33m80a93f1[m Merge pull request #4 from igomez-2025177/igomez-2025177
+[33md1fb471[m feat: cree controlador de vistas
