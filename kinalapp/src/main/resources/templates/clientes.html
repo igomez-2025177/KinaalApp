@@ -28,7 +28,13 @@
                 <input type="text" id="nombreCliente" placeholder="Nombre Cliente" required>
                 <input type="text" id="apellidoCliente" placeholder="Apellido Cliente" required>
                 <input type="text" id="direccionCliente" placeholder="Dirección" required>
-                <input type="number" id="estadoCliente" placeholder="Estado" required>
+
+                <select id="estadoCliente" required>
+                    <option value="">Seleccione estado</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+
                 <button type="submit" id="btnGuardarCliente">Guardar Cliente</button>
             </form>
         </section>
