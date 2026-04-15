@@ -1,31 +1,29 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("registroForm");
-    const CODIGO_ADMIN = "KINAL2026";
 
     form?.addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        const rolSeleccionado = document.getElementById("rolUsuario").value;
-
-        if (rolSeleccionado === "Administrador") {
-            const codigoIngresado = prompt("Ingrese el código para asignar rol Administrador:");
-
-            if (codigoIngresado !== CODIGO_ADMIN) {
-                alert("Código incorrecto. No se puede asignar el rol Administrador.");
-                return;
-            }
-        }
-
-        const usuario = {
-            codigoUsuario: parseInt(document.getElementById("codigoUsuario").value),
-            username: document.getElementById("usernameUsuario").value,
-            password: document.getElementById("passwordUsuario").value,
-            email: document.getElementById("emailUsuario").value,
-            rol: document.getElementById("rolUsuario").value,
-            estado: parseInt(document.getElementById("estadoUsuario").value)
-        };
-
         try {
+            const resUsuarios = await fetch("/usuarios");
+            const usuarios = await resUsuarios.json();
+
+            let nuevoCodigo = 1;
+
+            if (usuarios.length > 0) {
+                const maxCodigo = Math.max(...usuarios.map(u => u.codigoUsuario));
+                nuevoCodigo = maxCodigo + 1;
+            }
+
+            const usuario = {
+                codigoUsuario: nuevoCodigo,
+                username: document.getElementById("usernameUsuario").value,
+                password: document.getElementById("passwordUsuario").value,
+                email: document.getElementById("emailUsuario").value,
+                rol: "Vendedor",
+                estado: 1
+            };
+
             const res = await fetch("/usuarios", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
