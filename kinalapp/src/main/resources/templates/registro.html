@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registro</title>
+    <title>Crear Cuenta</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
@@ -12,24 +12,9 @@
             <h1>Crear Cuenta</h1>
 
             <form class="form-grid" id="registroForm">
-                <input type="number" id="codigoUsuario" placeholder="Código Usuario" required>
-                <input type="text" id="usernameUsuario" placeholder="Username" required>
-                <input type="password" id="passwordUsuario" placeholder="Password" required>
-                <input type="email" id="emailUsuario" placeholder="Email" required>
-
-                <select id="rolUsuario" required>
-                    <option value="">Seleccione rol</option>
-                    <option value="Administrador">Administrador</option>
-                    <option value="Vendedor">Vendedor</option>
-                    <option value="Supervisor">Supervisor</option>
-                </select>
-
-                <select id="estadoUsuario" required>
-                    <option value="">Seleccione estado</option>
-                    <option value="1">Activo</option>
-                    <option value="0">Inactivo</option>
-                </select>
-
+                <input type="email" id="emailUsuario" placeholder="Correo electrónico" required>
+                <input type="text" id="usernameUsuario" placeholder="Nombre de usuario" required>
+                <input type="password" id="passwordUsuario" placeholder="Contraseña" required>
                 <button type="submit">Crear cuenta</button>
             </form>
 
