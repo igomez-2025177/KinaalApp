@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="layout">
+    <main class="content">
+        <section class="card">
+            <h1>Crear Cuenta</h1>
+
+            <form class="form-grid" id="registroForm">
+                <input type="number" id="codigoUsuario" placeholder="Código Usuario" required>
+                <input type="text" id="usernameUsuario" placeholder="Username" required>
+                <input type="password" id="passwordUsuario" placeholder="Password" required>
+                <input type="email" id="emailUsuario" placeholder="Email" required>
+
+                <select id="rolUsuario" required>
+                    <option value="">Seleccione rol</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Vendedor">Vendedor</option>
+                    <option value="Supervisor">Supervisor</option>
+                </select>
+
+                <select id="estadoUsuario" required>
+                    <option value="">Seleccione estado</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+
+                <button type="submit">Crear cuenta</button>
+            </form>
+
+            <p style="margin-top: 15px;">
+                ¿Ya tienes cuenta?
+                <a th:href="@{/login}" style="color:#38bdf8; font-weight:bold;">Iniciar sesión</a>
+            </p>
+        </section>
+    </main>
+</div>
+
+<script th:src="@{/js/registro.js}"></script>
+</body>
+</html>
