@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${c.nombreCliente}</td>
                     <td>${c.apellidoCliente}</td>
                     <td>${c.direccion}</td>
-                    <td>${c.estado}</td>
+                    <td>${mostrarEstado(c.estado)}</td>
                     <td>
                         <button type="button" onclick="editarCliente('${c.DPICliente}', '${c.nombreCliente}', '${c.apellidoCliente}', '${c.direccion}', ${c.estado})">Editar</button>
                         <button type="button" onclick="eliminarCliente('${c.DPICliente}')">Eliminar</button>
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${c.nombreCliente}</td>
                         <td>${c.apellidoCliente}</td>
                         <td>${c.direccion}</td>
-                        <td>${c.estado}</td>
+                        <td>${mostrarEstado(c.estado)}</td>
                         <td>
                             <button type="button" onclick="editarCliente('${c.DPICliente}', '${c.nombreCliente}', '${c.apellidoCliente}', '${c.direccion}', ${c.estado})">Editar</button>
                             <button type="button" onclick="eliminarCliente('${c.DPICliente}')">Eliminar</button>
@@ -109,6 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             console.error("Error al cargar clientes:", error);
         }
+    }
+
+    function mostrarEstado(estado) {
+        return estado === 1 ? "Activo" : "Inactivo";
     }
 
     function resetFormulario() {
