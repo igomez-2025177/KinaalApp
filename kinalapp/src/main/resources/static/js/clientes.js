@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputBuscar = document.getElementById("buscarDpiCliente");
 
     let modoEdicion = false;
-    let dpiOriginal = null;
+    let dpiOriginal = null; 
 
     cargarClientes();
 
