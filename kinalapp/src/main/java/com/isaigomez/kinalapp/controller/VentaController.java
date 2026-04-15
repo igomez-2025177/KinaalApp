@@ -39,7 +39,7 @@ public class VentaController {
     @GetMapping("/{id}")
     public ResponseEntity<Venta> buscarPorId(@PathVariable int id) {
         return repo.findById(id)
-                .map(venta -> ResponseEntity.ok(venta))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
