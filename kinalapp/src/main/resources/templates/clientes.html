@@ -29,8 +29,16 @@
                 <input type="text" id="apellidoCliente" placeholder="Apellido Cliente" required>
                 <input type="text" id="direccionCliente" placeholder="Dirección" required>
                 <input type="number" id="estadoCliente" placeholder="Estado" required>
-                <button type="submit">Guardar Cliente</button>
+                <button type="submit" id="btnGuardarCliente">Guardar Cliente</button>
             </form>
+        </section>
+
+        <section class="card">
+            <h2>Buscar Cliente por DPI</h2>
+            <div class="form-grid">
+                <input type="text" id="buscarDpiCliente" placeholder="Ingrese DPI a buscar">
+                <button type="button" id="btnBuscarCliente">Buscar Cliente</button>
+            </div>
         </section>
 
         <section class="card">
@@ -43,6 +51,7 @@
                     <th>Apellido</th>
                     <th>Dirección</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody id="tablaClientes"></tbody>
