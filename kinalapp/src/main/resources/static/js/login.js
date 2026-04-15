@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     form?.addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        const username = document.getElementById("loginUsername").value;
-        const password = document.getElementById("loginPassword").value;
+        const username = document.getElementById("loginUsername").value.trim();
+        const password = document.getElementById("loginPassword").value.trim();
 
         try {
             const res = await fetch("/usuarios");
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (usuarioValido) {
                 alert("Inicio de sesión correcto");
-                window.location.href = "/";
+                window.location.href = "/index";
             } else {
                 alert("Usuario, contraseña o estado incorrecto");
             }
