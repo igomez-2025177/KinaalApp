@@ -23,18 +23,45 @@
         <section class="card">
             <h1>Detalle Venta</h1>
 
-            <form class="form-grid">
-                <input type="number" placeholder="Código Detalle Venta">
-                <input type="number" placeholder="Cantidad">
-                <input type="number" step="0.01" placeholder="Precio Unitario">
-                <input type="number" step="0.01" placeholder="Subtotal">
-                <input type="number" placeholder="Código Producto">
-                <input type="number" placeholder="Código Venta">
-                <button type="submit">Guardar Detalle</button>
+            <form class="form-grid" id="detalleVentaForm">
+                <input type="number" id="codigoDetalleVenta" placeholder="Código Detalle Venta" required>
+                <input type="number" id="cantidadDetalle" placeholder="Cantidad" required>
+                <input type="number" step="0.01" id="precioUnitarioDetalle" placeholder="Precio Unitario" required>
+                <input type="number" step="0.01" id="subtotalDetalle" placeholder="Subtotal" required>
+                <input type="number" id="codigoProductoDetalle" placeholder="Código Producto" required>
+                <input type="number" id="codigoVentaDetalle" placeholder="Código Venta" required>
+                <button type="submit" id="btnGuardarDetalleVenta">Guardar Detalle</button>
             </form>
+        </section>
+
+        <section class="card">
+            <h2>Buscar Detalle por Código</h2>
+            <div class="form-grid">
+                <input type="number" id="buscarCodigoDetalleVenta" placeholder="Ingrese código a buscar">
+                <button type="button" id="btnBuscarDetalleVenta">Buscar Detalle</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Listado de Detalle Venta</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>Código Producto</th>
+                    <th>Código Venta</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="tablaDetalleVenta"></tbody>
+            </table>
         </section>
     </main>
 </div>
-<script th:src="@{/js/app.js}"></script>
+
+<script th:src="@{/js/detalleventa.js}"></script>
 </body>
 </html>
