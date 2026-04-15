@@ -38,7 +38,16 @@ public class ProductoController {
     @GetMapping("/{id}")
     public ResponseEntity<Producto> buscarPorId(@PathVariable int id) {
         return repo.findById(id)
-                .map(producto -> ResponseEntity.ok(producto))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable int id) {
+        if (!repo.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        repo.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
