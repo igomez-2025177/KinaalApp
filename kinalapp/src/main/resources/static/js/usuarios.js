@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnBuscar = document.getElementById("btnBuscarUsuario");
     const inputBuscar = document.getElementById("buscarCodigoUsuario");
 
+    const CODIGO_ADMIN = "KINAL2026";
+
     let modoEdicion = false;
     let idOriginal = null;
 
@@ -12,12 +14,23 @@ document.addEventListener("DOMContentLoaded", function () {
     form?.addEventListener("submit", async function (e) {
         e.preventDefault();
 
+        const rolSeleccionado = document.getElementById("rolUsuario").value;
+
+        if (rolSeleccionado === "Administrador" && !modoEdicion) {
+            const codigoIngresado = prompt("Ingrese el código para asignar el rol Administrador:");
+
+            if (codigoIngresado !== CODIGO_ADMIN) {
+                alert("Código incorrecto. No se puede asignar el rol Administrador.");
+                return;
+            }
+        }
+
         const usuario = {
             codigoUsuario: parseInt(document.getElementById("codigoUsuario").value),
             username: document.getElementById("usernameUsuario").value,
             password: document.getElementById("passwordUsuario").value,
             email: document.getElementById("emailUsuario").value,
-            rol: document.getElementById("rolUsuario").value,
+            rol: rolSeleccionado,
             estado: parseInt(document.getElementById("estadoUsuario").value)
         };
 
@@ -74,10 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${u.password}</td>
                     <td>${u.email}</td>
                     <td>${u.rol}</td>
-                    <td>${u.estado}</td>
+                    <td>${mostrarEstado(u.estado)}</td>
                     <td>
                         <button type="button" onclick="editarUsuario(${u.codigoUsuario}, '${u.username}', '${u.password}', '${u.email}', '${u.rol}', ${u.estado})">Editar</button>
-                        <button type="button" onclick="eliminarUsuario(${u.codigoUsuario})">Eliminar</button>
+                        <button type="button" onclick="eliminarUsuario(${u.codigoUsuario}, '${u.rol}')">Eliminar</button>
                     </td>
                 </tr>
             `;
@@ -101,10 +114,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${u.password}</td>
                         <td>${u.email}</td>
                         <td>${u.rol}</td>
-                        <td>${u.estado}</td>
+                        <td>${mostrarEstado(u.estado)}</td>
                         <td>
                             <button type="button" onclick="editarUsuario(${u.codigoUsuario}, '${u.username}', '${u.password}', '${u.email}', '${u.rol}', ${u.estado})">Editar</button>
-                            <button type="button" onclick="eliminarUsuario(${u.codigoUsuario})">Eliminar</button>
+                            <button type="button" onclick="eliminarUsuario(${u.codigoUsuario}, '${u.rol}')">Eliminar</button>
                         </td>
                     </tr>
                 `;
@@ -112,6 +125,10 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             console.error("Error al cargar usuarios:", error);
         }
+    }
+
+    function mostrarEstado(estado) {
+        return estado === 1 ? "Activo" : "Inactivo";
     }
 
     function resetFormulario() {
@@ -136,7 +153,16 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("btnGuardarUsuario").textContent = "Actualizar Usuario";
     };
 
-    window.eliminarUsuario = async function (codigo) {
+    window.eliminarUsuario = async function (codigo, rol) {
+        if (rol === "Administrador") {
+            const codigoIngresado = prompt("Ingrese el código para eliminar un usuario Administrador:");
+
+            if (codigoIngresado !== CODIGO_ADMIN) {
+                alert("Código incorrecto. No se puede eliminar un Administrador.");
+                return;
+            }
+        }
+
         const confirmado = confirm("¿Deseas eliminar este usuario?");
 
         if (!confirmado) {
