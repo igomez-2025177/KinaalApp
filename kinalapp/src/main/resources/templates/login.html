@@ -2,27 +2,47 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}">
 </head>
-<body>
-<div class="layout">
-    <main class="content">
-        <section class="card">
-            <h1>Iniciar Sesión</h1>
+<body class="auth-body">
+<div class="auth-wrapper">
+    <section class="auth-card">
+        <div class="auth-avatar">
+            <div class="auth-avatar-icon"></div>
+        </div>
 
-            <form class="form-grid" id="loginForm">
+        <h1>Iniciar Sesión</h1>
+
+        <form class="auth-form" id="loginForm">
+            <div class="auth-input-group">
+                <span class="auth-icon user-icon"></span>
                 <input type="text" id="loginUsername" placeholder="Username" required>
-                <input type="password" id="loginPassword" placeholder="Password" required>
-                <button type="submit">Entrar</button>
-            </form>
+            </div>
 
-            <p style="margin-top: 15px;">
-                ¿No tienes cuenta?
-                <a th:href="@{/registro}" style="color:#38bdf8; font-weight:bold;">Crear cuenta</a>
-            </p>
-        </section>
-    </main>
+            <div class="auth-input-group">
+                <span class="auth-icon lock-icon"></span>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+            </div>
+
+            <div class="auth-options">
+                <label>
+                    <input type="checkbox">
+                    Recordarme
+                </label>
+
+                <a href="#">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" class="auth-btn">LOGIN</button>
+        </form>
+
+        <p class="auth-link-text">
+            ¿No tienes cuenta?
+            <a th:href="@{/registro}">Crear cuenta</a>
+        </p>
+    </section>
 </div>
 
 <script th:src="@{/js/login.js}"></script>
