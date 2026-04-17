@@ -28,8 +28,20 @@
                 <input type="text" id="usernameUsuario" placeholder="Username" required>
                 <input type="password" id="passwordUsuario" placeholder="Password" required>
                 <input type="email" id="emailUsuario" placeholder="Email" required>
-                <input type="text" id="rolUsuario" placeholder="Rol" required>
-                <input type="number" id="estadoUsuario" placeholder="Estado" required>
+
+                <select id="rolUsuario" required>
+                    <option value="">Seleccione rol</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Vendedor">Vendedor</option>
+                    <option value="Supervisor">Supervisor</option>
+                </select>
+
+                <select id="estadoUsuario" required>
+                    <option value="">Seleccione estado</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+
                 <button type="submit" id="btnGuardarUsuario">Guardar Usuario</button>
             </form>
         </section>

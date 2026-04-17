@@ -70,13 +70,13 @@ document.addEventListener("DOMContentLoaded", function () {
             tabla.innerHTML = `
                 <tr>
                     <td>${v.codigoVenta}</td>
-                    <td>${v.fechaVenta}</td>
-                    <td>${v.total}</td>
-                    <td>${v.estado}</td>
+                    <td>${formatearFecha(v.fechaVenta)}</td>
+                    <td>${formatearQuetzales(v.total)}</td>
+                    <td>${mostrarEstado(v.estado)}</td>
                     <td>${v.dpiCliente}</td>
                     <td>${v.codigoUsuario}</td>
                     <td>
-                        <button type="button" onclick="editarVenta(${v.codigoVenta}, '${v.fechaVenta}', ${v.total}, ${v.estado}, '${v.dpiCliente}', ${v.codigoUsuario})">Editar</button>
+                        <button type="button" onclick="editarVenta(${v.codigoVenta}, '${formatearFecha(v.fechaVenta)}', ${v.total}, ${v.estado}, '${v.dpiCliente}', ${v.codigoUsuario})">Editar</button>
                         <button type="button" onclick="eliminarVenta(${v.codigoVenta})">Eliminar</button>
                     </td>
                 </tr>
@@ -97,13 +97,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 tabla.innerHTML += `
                     <tr>
                         <td>${v.codigoVenta}</td>
-                        <td>${v.fechaVenta}</td>
-                        <td>${v.total}</td>
-                        <td>${v.estado}</td>
+                        <td>${formatearFecha(v.fechaVenta)}</td>
+                        <td>${formatearQuetzales(v.total)}</td>
+                        <td>${mostrarEstado(v.estado)}</td>
                         <td>${v.dpiCliente}</td>
                         <td>${v.codigoUsuario}</td>
                         <td>
-                            <button type="button" onclick="editarVenta(${v.codigoVenta}, '${v.fechaVenta}', ${v.total}, ${v.estado}, '${v.dpiCliente}', ${v.codigoUsuario})">Editar</button>
+                            <button type="button" onclick="editarVenta(${v.codigoVenta}, '${formatearFecha(v.fechaVenta)}', ${v.total}, ${v.estado}, '${v.dpiCliente}', ${v.codigoUsuario})">Editar</button>
                             <button type="button" onclick="eliminarVenta(${v.codigoVenta})">Eliminar</button>
                         </td>
                     </tr>
@@ -112,6 +112,19 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             console.error("Error al cargar ventas:", error);
         }
+    }
+
+    function mostrarEstado(estado) {
+        return estado === 1 ? "Activo" : "Inactivo";
+    }
+
+    function formatearQuetzales(total) {
+        return "Q " + Number(total).toFixed(2);
+    }
+
+    function formatearFecha(fecha) {
+        if (!fecha) return "";
+        return fecha.split("T")[0];
     }
 
     function resetFormulario() {

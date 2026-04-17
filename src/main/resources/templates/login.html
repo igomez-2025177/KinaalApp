@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}">
+</head>
+<body class="auth-body">
+<div class="auth-wrapper">
+    <section class="auth-card">
+
+        <h1>Iniciar Sesión</h1>
+
+        <form class="auth-form" id="loginForm">
+            <div class="auth-input-group">
+                <span class="auth-icon user-icon"></span>
+                <input type="text" id="loginUsername" placeholder="Username" required>
+            </div>
+
+            <div class="auth-input-group">
+                <span class="auth-icon lock-icon"></span>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="auth-btn">LOGIN</button>
+        </form>
+
+        <p class="auth-link-text">
+            ¿No tienes cuenta?
+            <a th:href="@{/registro}">Crear cuenta</a>
+        </p>
+    </section>
+</div>
+
+<script th:src="@{/js/login.js}"></script>
+</body>
+</html>
