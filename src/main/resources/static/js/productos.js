@@ -70,9 +70,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <tr>
                     <td>${p.codigoProducto}</td>
                     <td>${p.nombreProducto}</td>
-                    <td>${p.precio}</td>
+                    <td>${formatearQuetzales(p.precio)}</td>
                     <td>${p.stock}</td>
-                    <td>${p.estado}</td>
+                    <td>${mostrarEstado(p.estado)}</td>
                     <td>
                         <button type="button" onclick="editarProducto(${p.codigoProducto}, '${p.nombreProducto}', ${p.precio}, ${p.stock}, ${p.estado})">Editar</button>
                         <button type="button" onclick="eliminarProducto(${p.codigoProducto})">Eliminar</button>
@@ -96,9 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     <tr>
                         <td>${p.codigoProducto}</td>
                         <td>${p.nombreProducto}</td>
-                        <td>${p.precio}</td>
+                        <td>${formatearQuetzales(p.precio)}</td>
                         <td>${p.stock}</td>
-                        <td>${p.estado}</td>
+                        <td>${mostrarEstado(p.estado)}</td>
                         <td>
                             <button type="button" onclick="editarProducto(${p.codigoProducto}, '${p.nombreProducto}', ${p.precio}, ${p.stock}, ${p.estado})">Editar</button>
                             <button type="button" onclick="eliminarProducto(${p.codigoProducto})">Eliminar</button>
@@ -109,6 +109,14 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             console.error("Error al cargar productos:", error);
         }
+    }
+
+    function mostrarEstado(estado) {
+        return estado === 1 ? "Activo" : "Inactivo";
+    }
+
+    function formatearQuetzales(precio) {
+        return "Q " + Number(precio).toFixed(2);
     }
 
     function resetFormulario() {
