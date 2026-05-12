@@ -7,23 +7,28 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
-public class    Usuario {
+public class Usuario {
+
     @Id
     @Column(name = "codigo_usuario")
     private int codigoUsuario;
-    @Column
+
+    @Column(nullable = false)
     private String username;
-    @Column
+
+    @Column(nullable = false)
     private String password;
-    @Column
+
+    @Column(nullable = false)
     private String email;
-    @Column
+
+    @Column(nullable = false)
     private String rol;
-    @Column
+
+    @Column(nullable = false)
     private int estado;
 
     public Usuario() {
-
     }
 
     public Usuario(int codigoUsuario, String username, String password, String email, String rol, int estado) {
