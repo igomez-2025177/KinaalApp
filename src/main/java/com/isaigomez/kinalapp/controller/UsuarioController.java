@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -39,6 +40,12 @@ public class UsuarioController {
                     .body("El nombre de usuario ya existe");
         }
 
+        int nuevoCodigo = repo.findAll().stream()
+                .map(Usuario::getCodigoUsuario)
+                .max(Comparator.naturalOrder())
+                .orElse(0) + 1;
+
+        usuario.setCodigoUsuario(nuevoCodigo);
         usuario.setRol("USER");
         usuario.setEstado(1);
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
@@ -51,7 +58,13 @@ public class UsuarioController {
         if (!repo.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
+
         usuario.setCodigoUsuario(id);
+
+        if (usuario.getPassword() != null && !usuario.getPassword().isBlank()) {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        }
+
         return ResponseEntity.ok(repo.save(usuario));
     }
 

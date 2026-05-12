@@ -24,17 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 submitButton.textContent = "Creando cuenta...";
             }
 
-            const resUsuarios = await fetch("/usuarios");
-            const usuarios = resUsuarios.ok ? await resUsuarios.json() : [];
-
-            let nuevoCodigo = 1;
-            if (usuarios.length > 0) {
-                const maxCodigo = Math.max(...usuarios.map(u => u.codigoUsuario));
-                nuevoCodigo = maxCodigo + 1;
-            }
-
             const usuario = {
-                codigoUsuario: nuevoCodigo,
                 username: username,
                 password: password,
                 email: email
@@ -50,14 +40,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (res.status === 409) {
                 const mensaje = await res.text();
-                alert(mensaje);
+                alert(mensaje || "El nombre de usuario ya existe");
                 return;
             }
 
             if (!res.ok) {
                 const mensaje = await res.text();
-                console.error("Error al registrar usuario:", mensaje);
-                throw new Error("No se pudo crear la cuenta");
+                console.error("Error al crear cuenta:", mensaje);
+                alert("Error al crear la cuenta");
+                return;
             }
 
             alert("Cuenta creada correctamente");
@@ -68,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } finally {
             if (submitButton) {
                 submitButton.disabled = false;
-                submitButton.textContent = "Crear cuenta";
+                submitButton.textContent = "REGISTRARME";
             }
         }
     });
