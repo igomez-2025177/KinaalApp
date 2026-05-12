@@ -26,6 +26,11 @@ public class ViewController {
         return "index";
     }
 
+    @GetMapping("/home")
+    public String home() {
+        return "index";
+    }
+
     @GetMapping("/clientes-view")
     public String clientes() {
         return "clientes";
