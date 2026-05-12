@@ -8,14 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        const emailInput = document.getElementById("emailUsuario");
-        const usernameInput = document.getElementById("usernameUsuario");
-        const passwordInput = document.getElementById("passwordUsuario");
+        const email = document.getElementById("emailUsuario").value.trim();
+        const username = document.getElementById("usernameUsuario").value.trim();
+        const password = document.getElementById("passwordUsuario").value.trim();
         const submitButton = form.querySelector("button[type='submit']");
-
-        const email = emailInput.value.trim();
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value.trim();
 
         if (!email || !username || !password) {
             alert("Todos los campos son obligatorios");
@@ -29,20 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const resUsuarios = await fetch("/usuarios");
-            if (!resUsuarios.ok) {
-                throw new Error("No se pudo obtener la lista de usuarios");
-            }
-
-            const usuarios = await resUsuarios.json();
-
-            const usuarioExistente = usuarios.find(u => u.username === username);
-            if (usuarioExistente) {
-                alert("Ese nombre de usuario ya existe");
-                return;
-            }
+            const usuarios = resUsuarios.ok ? await resUsuarios.json() : [];
 
             let nuevoCodigo = 1;
-
             if (usuarios.length > 0) {
                 const maxCodigo = Math.max(...usuarios.map(u => u.codigoUsuario));
                 nuevoCodigo = maxCodigo + 1;
@@ -52,18 +37,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 codigoUsuario: nuevoCodigo,
                 username: username,
                 password: password,
-                email: email,
-                rol: "USER",
-                estado: 1
+                email: email
             };
 
-            const res = await fetch("/usuarios", {
+            const res = await fetch("/usuarios/registro", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(usuario)
             });
+
+            if (res.status === 409) {
+                const mensaje = await res.text();
+                alert(mensaje);
+                return;
+            }
 
             if (!res.ok) {
                 const mensaje = await res.text();
