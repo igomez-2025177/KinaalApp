@@ -1,31 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("loginForm");
+    const form = document.querySelector(".auth-form");
+    const usernameInput = document.querySelector('input[name="username"]');
+    const passwordInput = document.querySelector('input[name="password"]');
+    const loginButton = document.querySelector(".auth-btn");
 
-    form?.addEventListener("submit", async function (e) {
-        e.preventDefault();
+    if (!form || !usernameInput || !passwordInput) {
+        return;
+    }
 
-        const username = document.getElementById("loginUsername").value.trim();
-        const password = document.getElementById("loginPassword").value.trim();
+    usernameInput.addEventListener("input", function () {
+        this.value = this.value.trimStart();
+    });
 
-        try {
-            const res = await fetch("/usuarios");
-            const usuarios = await res.json();
+    passwordInput.addEventListener("input", function () {
+        this.value = this.value.trimStart();
+    });
 
-            const usuarioValido = usuarios.find(u =>
-                u.username === username &&
-                u.password === password &&
-                u.estado === 1
-            );
-
-            if (usuarioValido) {
-                alert("Inicio de sesión correcto");
-                window.location.href = "/index";
-            } else {
-                alert("Usuario, contraseña o estado incorrecto");
-            }
-        } catch (error) {
-            console.error(error);
-            alert("Error al iniciar sesión");
+    form.addEventListener("submit", function () {
+        if (loginButton) {
+            loginButton.disabled = true;
+            loginButton.textContent = "Ingresando...";
         }
     });
 });
