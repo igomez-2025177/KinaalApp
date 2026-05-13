@@ -4,34 +4,65 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnBuscar = document.getElementById("btnBuscarUsuario");
     const inputBuscar = document.getElementById("buscarCodigoUsuario");
 
-    const CODIGO_ADMIN = "KINAL2026";
-
     let modoEdicion = false;
     let idOriginal = null;
+    let rolUsuarioActual = "";
 
-    cargarUsuarios();
+    iniciar();
+
+    async function iniciar() {
+        await obtenerRolUsuarioActual();
+        await cargarUsuarios();
+    }
+
+    async function obtenerRolUsuarioActual() {
+        try {
+            const res = await fetch("/usuarios/rol");
+
+            if (!res.ok) {
+                throw new Error("No se pudo obtener el rol del usuario actual");
+            }
+
+            const data = await res.json();
+            rolUsuarioActual = (data.rol || "").toUpperCase();
+        } catch (error) {
+            console.error("Error al obtener rol:", error);
+            rolUsuarioActual = "";
+        }
+    }
 
     form?.addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        const rolSeleccionado = document.getElementById("rolUsuario").value;
+        if (modoEdicion && rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede actualizar usuarios");
+            return;
+        }
 
-        if (rolSeleccionado === "Administrador" && !modoEdicion) {
-            const codigoIngresado = prompt("Ingrese el código para asignar el rol Administrador:");
+        const codigoTexto = document.getElementById("codigoUsuario").value.trim();
+        const username = document.getElementById("usernameUsuario").value.trim();
+        const password = document.getElementById("passwordUsuario").value.trim();
+        const email = document.getElementById("emailUsuario").value.trim();
+        const rol = document.getElementById("rolUsuario").value;
+        const estadoTexto = document.getElementById("estadoUsuario").value.trim();
 
-            if (codigoIngresado !== CODIGO_ADMIN) {
-                alert("Código incorrecto. No se puede asignar el rol Administrador.");
-                return;
-            }
+        if (!username || !email) {
+            alert("Username y correo son obligatorios");
+            return;
+        }
+
+        if (!modoEdicion && !password) {
+            alert("La contraseña es obligatoria");
+            return;
         }
 
         const usuario = {
-            codigoUsuario: parseInt(document.getElementById("codigoUsuario").value),
-            username: document.getElementById("usernameUsuario").value,
-            password: document.getElementById("passwordUsuario").value,
-            email: document.getElementById("emailUsuario").value,
-            rol: rolSeleccionado,
-            estado: parseInt(document.getElementById("estadoUsuario").value)
+            codigoUsuario: codigoTexto ? parseInt(codigoTexto) : null,
+            username: username,
+            password: password,
+            email: email,
+            rol: rol,
+            estado: estadoTexto ? parseInt(estadoTexto) : 1
         };
 
         try {
@@ -51,8 +82,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
+            const mensaje = await res.text();
+
             if (!res.ok) {
-                throw new Error("Error al guardar o actualizar usuario");
+                alert(mensaje || "Error al guardar o actualizar usuario");
+                return;
             }
 
             resetFormulario();
@@ -76,7 +110,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const res = await fetch(`/usuarios/${id}`);
 
             if (!res.ok) {
-                throw new Error("Usuario no encontrado");
+                const mensaje = await res.text();
+                alert(mensaje || "Usuario no encontrado");
+                return;
             }
 
             const u = await res.json();
@@ -84,14 +120,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 <tr>
                     <td>${u.codigoUsuario}</td>
                     <td>${u.username}</td>
-                    <td>${u.password}</td>
+                    <td>********</td>
                     <td>${u.email}</td>
                     <td>${u.rol}</td>
                     <td>${mostrarEstado(u.estado)}</td>
-                    <td>
-                        <button type="button" onclick="editarUsuario(${u.codigoUsuario}, '${u.username}', '${u.password}', '${u.email}', '${u.rol}', ${u.estado})">Editar</button>
-                        <button type="button" onclick="eliminarUsuario(${u.codigoUsuario}, '${u.rol}')">Eliminar</button>
-                    </td>
+                    <td>${renderAcciones(u)}</td>
                 </tr>
             `;
         } catch (error) {
@@ -103,6 +136,10 @@ document.addEventListener("DOMContentLoaded", function () {
     async function cargarUsuarios() {
         try {
             const res = await fetch("/usuarios");
+            if (!res.ok) {
+                return;
+            }
+
             const data = await res.json();
             tabla.innerHTML = "";
 
@@ -111,14 +148,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     <tr>
                         <td>${u.codigoUsuario}</td>
                         <td>${u.username}</td>
-                        <td>${u.password}</td>
+                        <td>********</td>
                         <td>${u.email}</td>
                         <td>${u.rol}</td>
                         <td>${mostrarEstado(u.estado)}</td>
-                        <td>
-                            <button type="button" onclick="editarUsuario(${u.codigoUsuario}, '${u.username}', '${u.password}', '${u.email}', '${u.rol}', ${u.estado})">Editar</button>
-                            <button type="button" onclick="eliminarUsuario(${u.codigoUsuario}, '${u.rol}')">Eliminar</button>
-                        </td>
+                        <td>${renderAcciones(u)}</td>
                     </tr>
                 `;
             });
@@ -127,8 +161,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function renderAcciones(u) {
+        if (rolUsuarioActual !== "ADMIN") {
+            return "";
+        }
+
+        return `
+            <button type="button" onclick="editarUsuario(${u.codigoUsuario}, '${escapar(u.username)}', '${escapar(u.email)}', '${escapar(u.rol)}', ${u.estado})">Editar</button>
+            <button type="button" onclick="eliminarUsuario(${u.codigoUsuario})">Eliminar</button>
+        `;
+    }
+
     function mostrarEstado(estado) {
-        return estado === 1 ? "Activo" : "Inactivo";
+        return Number(estado) === 1 ? "Activo" : "Inactivo";
     }
 
     function resetFormulario() {
@@ -139,12 +184,21 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("btnGuardarUsuario").textContent = "Guardar Usuario";
     }
 
-    window.editarUsuario = function (codigo, username, password, email, rol, estado) {
+    function escapar(texto) {
+        return String(texto).replace(/'/g, "\\'");
+    }
+
+    window.editarUsuario = function (codigo, username, email, rol, estado) {
+        if (rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede actualizar usuarios");
+            return;
+        }
+
         document.getElementById("codigoUsuario").value = codigo;
         document.getElementById("usernameUsuario").value = username;
-        document.getElementById("passwordUsuario").value = password;
+        document.getElementById("passwordUsuario").value = "";
         document.getElementById("emailUsuario").value = email;
-        document.getElementById("rolUsuario").value = rol;
+        document.getElementById("rolUsuario").value = rol === "ADMIN" ? "Administrador" : rol === "USER" ? "Usuario" : rol;
         document.getElementById("estadoUsuario").value = estado;
 
         idOriginal = codigo;
@@ -153,14 +207,10 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("btnGuardarUsuario").textContent = "Actualizar Usuario";
     };
 
-    window.eliminarUsuario = async function (codigo, rol) {
-        if (rol === "Administrador") {
-            const codigoIngresado = prompt("Ingrese el código para eliminar un usuario Administrador:");
-
-            if (codigoIngresado !== CODIGO_ADMIN) {
-                alert("Código incorrecto. No se puede eliminar un Administrador.");
-                return;
-            }
+    window.eliminarUsuario = async function (codigo) {
+        if (rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede eliminar usuarios");
+            return;
         }
 
         const confirmado = confirm("¿Deseas eliminar este usuario?");
@@ -174,13 +224,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 method: "DELETE"
             });
 
-            if (res.status === 404) {
-                alert("El usuario no existe o ya fue eliminado");
-                return;
-            }
+            const mensaje = await res.text();
 
             if (!res.ok) {
-                throw new Error("No se pudo eliminar");
+                alert(mensaje || "Error al eliminar usuario");
+                return;
             }
 
             await cargarUsuarios();

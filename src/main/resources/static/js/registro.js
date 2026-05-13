@@ -25,9 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const usuario = {
+                codigoUsuario: null,
                 username: username,
                 password: password,
-                email: email
+                email: email,
+                rol: "USER",
+                estado: 1
             };
 
             const res = await fetch("/usuarios/registro", {
@@ -38,16 +41,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify(usuario)
             });
 
+            const mensaje = await res.text();
+
             if (res.status === 409) {
-                const mensaje = await res.text();
                 alert(mensaje || "El nombre de usuario ya existe");
                 return;
             }
 
             if (!res.ok) {
-                const mensaje = await res.text();
                 console.error("Error al crear cuenta:", mensaje);
-                alert("Error al crear la cuenta");
+                alert(mensaje || "Error al crear la cuenta");
                 return;
             }
 
