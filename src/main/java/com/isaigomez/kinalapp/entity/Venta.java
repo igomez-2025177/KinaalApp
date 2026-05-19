@@ -5,73 +5,61 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import java.sql.Date;
-
 @Entity
 @Table(name = "ventas")
 public class Venta {
 
     @Id
     @Column(name = "codigo_venta")
-    private int codigoVenta;
+    private Integer codigoVenta;
 
-    @Column(name = "fecha_venta")
-    private Date fechaVenta;
+    @Column(name = "fecha_venta", nullable = false)
+    private String fechaVenta;
 
-    @Column(name = "total")
-    private double total;
+    @Column(nullable = false)
+    private Double total;
 
-    @Column
-    private int estado;
+    @Column(nullable = false)
+    private Integer estado;
 
-    @Column(name = "dpi_cliente")
+    @Column(name = "dpi_cliente", nullable = false)
     private String dpiCliente;
 
-    @Column(name = "codigo_usuario")
-    private int codigoUsuario;
+    @Column(name = "codigo_usuario", nullable = false)
+    private Integer codigoUsuario;
 
     public Venta() {
-
     }
 
-    public Venta(int codigoVenta, Date fechaVenta, double total, int estado, String dpiCliente, int codigoUsuario) {
-        this.codigoVenta = codigoVenta;
-        this.fechaVenta = fechaVenta;
-        this.total = total;
-        this.estado = estado;
-        this.dpiCliente = dpiCliente;
-        this.codigoUsuario = codigoUsuario;
-    }
-
-    public int getCodigoVenta() {
+    public Integer getCodigoVenta() {
         return codigoVenta;
     }
 
-    public void setCodigoVenta(int codigoVenta) {
+    public void setCodigoVenta(Integer codigoVenta) {
         this.codigoVenta = codigoVenta;
     }
 
-    public Date getFechaVenta() {
+    public String getFechaVenta() {
         return fechaVenta;
     }
 
-    public void setFechaVenta(Date fechaVenta) {
+    public void setFechaVenta(String fechaVenta) {
         this.fechaVenta = fechaVenta;
     }
 
-    public double getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 
-    public int getEstado() {
+    public Integer getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(Integer estado) {
         this.estado = estado;
     }
 
@@ -83,11 +71,11 @@ public class Venta {
         this.dpiCliente = dpiCliente;
     }
 
-    public int getCodigoUsuario() {
+    public Integer getCodigoUsuario() {
         return codigoUsuario;
     }
 
-    public void setCodigoUsuario(int codigoUsuario) {
+    public void setCodigoUsuario(Integer codigoUsuario) {
         this.codigoUsuario = codigoUsuario;
     }
 }

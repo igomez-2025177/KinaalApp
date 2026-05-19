@@ -6,17 +6,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let modoEdicion = false;
     let dpiOriginal = null;
+    let rolUsuarioActual = "";
 
-    cargarClientes();
+    iniciar();
+
+    async function iniciar() {
+        await obtenerRolUsuarioActual();
+        await cargarClientes();
+    }
+
+    async function obtenerRolUsuarioActual() {
+        try {
+            const res = await fetch("/usuarios/rol");
+
+            if (!res.ok) {
+                throw new Error("No se pudo obtener el rol");
+            }
+
+            const data = await res.json();
+            rolUsuarioActual = (data.rol || "").toUpperCase();
+        } catch (error) {
+            console.error("Error al obtener rol:", error);
+            rolUsuarioActual = "";
+        }
+    }
 
     form?.addEventListener("submit", async function (e) {
         e.preventDefault();
 
+        if (modoEdicion && rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede actualizar clientes");
+            return;
+        }
+
         const cliente = {
-            DPICliente: document.getElementById("dpiCliente").value,
-            nombreCliente: document.getElementById("nombreCliente").value,
-            apellidoCliente: document.getElementById("apellidoCliente").value,
-            direccion: document.getElementById("direccionCliente").value,
+            DPICliente: document.getElementById("dpiCliente").value.trim(),
+            nombreCliente: document.getElementById("nombreCliente").value.trim(),
+            apellidoCliente: document.getElementById("apellidoCliente").value.trim(),
+            direccion: document.getElementById("direccionCliente").value.trim(),
             estado: parseInt(document.getElementById("estadoCliente").value)
         };
 
@@ -37,8 +64,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
+            const mensaje = await res.text();
+
             if (!res.ok) {
-                throw new Error("Error al guardar/actualizar cliente");
+                alert(mensaje || "Error al guardar/actualizar cliente");
+                return;
             }
 
             resetFormulario();
@@ -62,7 +92,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const res = await fetch(`/clientes/${dpi}`);
 
             if (!res.ok) {
-                throw new Error("Cliente no encontrado");
+                const mensaje = await res.text();
+                alert(mensaje || "Cliente no encontrado");
+                return;
             }
 
             const c = await res.json();
@@ -73,10 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${c.apellidoCliente}</td>
                     <td>${c.direccion}</td>
                     <td>${mostrarEstado(c.estado)}</td>
-                    <td>
-                        <button type="button" onclick="editarCliente('${c.DPICliente}', '${c.nombreCliente}', '${c.apellidoCliente}', '${c.direccion}', ${c.estado})">Editar</button>
-                        <button type="button" onclick="eliminarCliente('${c.DPICliente}')">Eliminar</button>
-                    </td>
+                    <td>${renderAcciones(c)}</td>
                 </tr>
             `;
         } catch (error) {
@@ -88,6 +117,11 @@ document.addEventListener("DOMContentLoaded", function () {
     async function cargarClientes() {
         try {
             const res = await fetch("/clientes");
+
+            if (!res.ok) {
+                return;
+            }
+
             const data = await res.json();
             tabla.innerHTML = "";
 
@@ -99,10 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${c.apellidoCliente}</td>
                         <td>${c.direccion}</td>
                         <td>${mostrarEstado(c.estado)}</td>
-                        <td>
-                            <button type="button" onclick="editarCliente('${c.DPICliente}', '${c.nombreCliente}', '${c.apellidoCliente}', '${c.direccion}', ${c.estado})">Editar</button>
-                            <button type="button" onclick="eliminarCliente('${c.DPICliente}')">Eliminar</button>
-                        </td>
+                        <td>${renderAcciones(c)}</td>
                     </tr>
                 `;
             });
@@ -111,8 +142,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function renderAcciones(c) {
+        if (rolUsuarioActual !== "ADMIN") {
+            return "";
+        }
+
+        return `
+            <button type="button" onclick="editarCliente('${escapar(c.DPICliente)}', '${escapar(c.nombreCliente)}', '${escapar(c.apellidoCliente)}', '${escapar(c.direccion)}', ${c.estado})">Editar</button>
+            <button type="button" onclick="eliminarCliente('${escapar(c.DPICliente)}')">Eliminar</button>
+        `;
+    }
+
     function mostrarEstado(estado) {
-        return estado === 1 ? "Activo" : "Inactivo";
+        return Number(estado) === 1 ? "Activo" : "Inactivo";
     }
 
     function resetFormulario() {
@@ -123,7 +165,16 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("btnGuardarCliente").textContent = "Guardar Cliente";
     }
 
+    function escapar(texto) {
+        return String(texto).replace(/'/g, "\\'");
+    }
+
     window.editarCliente = function (dpi, nombre, apellido, direccion, estado) {
+        if (rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede actualizar clientes");
+            return;
+        }
+
         document.getElementById("dpiCliente").value = dpi;
         document.getElementById("nombreCliente").value = nombre;
         document.getElementById("apellidoCliente").value = apellido;
@@ -137,6 +188,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     window.eliminarCliente = async function (dpi) {
+        if (rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede eliminar clientes");
+            return;
+        }
+
         const confirmado = confirm("¿Deseas eliminar este cliente?");
 
         if (!confirmado) {
@@ -148,8 +204,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 method: "DELETE"
             });
 
+            const mensaje = await res.text();
+
             if (!res.ok) {
-                throw new Error("No se pudo eliminar");
+                alert(mensaje || "Error al eliminar cliente");
+                return;
             }
 
             await cargarClientes();

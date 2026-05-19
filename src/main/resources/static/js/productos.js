@@ -6,15 +6,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let modoEdicion = false;
     let idOriginal = null;
+    let rolUsuarioActual = "";
 
-    cargarProductos();
+    iniciar();
+
+    async function iniciar() {
+        await obtenerRolUsuarioActual();
+        await cargarProductos();
+    }
+
+    async function obtenerRolUsuarioActual() {
+        try {
+            const res = await fetch("/usuarios/rol");
+
+            if (!res.ok) {
+                throw new Error("No se pudo obtener el rol");
+            }
+
+            const data = await res.json();
+            rolUsuarioActual = (data.rol || "").toUpperCase();
+        } catch (error) {
+            console.error("Error al obtener rol:", error);
+            rolUsuarioActual = "";
+        }
+    }
 
     form?.addEventListener("submit", async function (e) {
         e.preventDefault();
 
+        if (modoEdicion && rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede actualizar productos");
+            return;
+        }
+
         const producto = {
-            codigoProducto: parseInt(document.getElementById("codigoProducto").value),
-            nombreProducto: document.getElementById("nombreProducto").value,
+            codigoProducto: document.getElementById("codigoProducto").value
+                ? parseInt(document.getElementById("codigoProducto").value)
+                : null,
+            nombreProducto: document.getElementById("nombreProducto").value.trim(),
             precio: parseFloat(document.getElementById("precioProducto").value),
             stock: parseInt(document.getElementById("stockProducto").value),
             estado: parseInt(document.getElementById("estadoProducto").value)
@@ -37,8 +66,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
+            const mensaje = await res.text();
+
             if (!res.ok) {
-                throw new Error("Error al guardar o actualizar producto");
+                alert(mensaje || "Error al guardar o actualizar producto");
+                return;
             }
 
             resetFormulario();
@@ -62,7 +94,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const res = await fetch(`/productos/${id}`);
 
             if (!res.ok) {
-                throw new Error("Producto no encontrado");
+                const mensaje = await res.text();
+                alert(mensaje || "Producto no encontrado");
+                return;
             }
 
             const p = await res.json();
@@ -73,10 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${formatearQuetzales(p.precio)}</td>
                     <td>${p.stock}</td>
                     <td>${mostrarEstado(p.estado)}</td>
-                    <td>
-                        <button type="button" onclick="editarProducto(${p.codigoProducto}, '${p.nombreProducto}', ${p.precio}, ${p.stock}, ${p.estado})">Editar</button>
-                        <button type="button" onclick="eliminarProducto(${p.codigoProducto})">Eliminar</button>
-                    </td>
+                    <td>${renderAcciones(p)}</td>
                 </tr>
             `;
         } catch (error) {
@@ -88,6 +119,11 @@ document.addEventListener("DOMContentLoaded", function () {
     async function cargarProductos() {
         try {
             const res = await fetch("/productos");
+
+            if (!res.ok) {
+                return;
+            }
+
             const data = await res.json();
             tabla.innerHTML = "";
 
@@ -99,10 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${formatearQuetzales(p.precio)}</td>
                         <td>${p.stock}</td>
                         <td>${mostrarEstado(p.estado)}</td>
-                        <td>
-                            <button type="button" onclick="editarProducto(${p.codigoProducto}, '${p.nombreProducto}', ${p.precio}, ${p.stock}, ${p.estado})">Editar</button>
-                            <button type="button" onclick="eliminarProducto(${p.codigoProducto})">Eliminar</button>
-                        </td>
+                        <td>${renderAcciones(p)}</td>
                     </tr>
                 `;
             });
@@ -111,8 +144,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function renderAcciones(p) {
+        if (rolUsuarioActual !== "ADMIN") {
+            return "";
+        }
+
+        return `
+            <button type="button" onclick="editarProducto(${p.codigoProducto}, '${escapar(p.nombreProducto)}', ${p.precio}, ${p.stock}, ${p.estado})">Editar</button>
+            <button type="button" onclick="eliminarProducto(${p.codigoProducto})">Eliminar</button>
+        `;
+    }
+
     function mostrarEstado(estado) {
-        return estado === 1 ? "Activo" : "Inactivo";
+        return Number(estado) === 1 ? "Activo" : "Inactivo";
     }
 
     function formatearQuetzales(precio) {
@@ -127,7 +171,16 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("btnGuardarProducto").textContent = "Guardar Producto";
     }
 
+    function escapar(texto) {
+        return String(texto).replace(/'/g, "\\'");
+    }
+
     window.editarProducto = function (codigo, nombre, precio, stock, estado) {
+        if (rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede actualizar productos");
+            return;
+        }
+
         document.getElementById("codigoProducto").value = codigo;
         document.getElementById("nombreProducto").value = nombre;
         document.getElementById("precioProducto").value = precio;
@@ -141,6 +194,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     window.eliminarProducto = async function (codigo) {
+        if (rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede eliminar productos");
+            return;
+        }
+
         const confirmado = confirm("¿Deseas eliminar este producto?");
 
         if (!confirmado) {
@@ -152,13 +210,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 method: "DELETE"
             });
 
-            if (res.status === 404) {
-                alert("El producto no existe o ya fue eliminado");
-                return;
-            }
+            const mensaje = await res.text();
 
             if (!res.ok) {
-                throw new Error("No se pudo eliminar");
+                alert(mensaje || "Error al eliminar producto");
+                return;
             }
 
             await cargarProductos();
