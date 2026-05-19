@@ -34,19 +34,6 @@ public class Usuario {
     public Usuario() {
     }
 
-<<<<<<< Updated upstream
-    public Usuario(Integer codigoUsuario, String username, String password, String email, String rol, Integer estado) {
-=======
-    public Usuario(Integer codigoUsuario, String username, String password, String email, String rol, int estado) {
->>>>>>> Stashed changes
-        this.codigoUsuario = codigoUsuario;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.rol = rol;
-        this.estado = estado;
-    }
-
     public Integer getCodigoUsuario() {
         return codigoUsuario;
     }

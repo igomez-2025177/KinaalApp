@@ -29,9 +29,30 @@ public class VentaController {
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<?> guardar(@RequestBody Venta venta) {
         try {
-            venta.setCodigoVenta(null);
+            if (venta.getFechaVenta() == null || venta.getFechaVenta().isBlank()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La fecha de venta es obligatoria");
+            }
+
+            if (venta.getTotal() == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El total es obligatorio");
+            }
+
+            if (venta.getDpiCliente() == null || venta.getDpiCliente().isBlank()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cliente es obligatorio");
+            }
+
+            if (venta.getCodigoUsuario() == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El usuario es obligatorio");
+            }
+
+            if (venta.getEstado() == null) {
+                venta.setEstado(1);
+            }
+
             return ResponseEntity.ok(repo.save(venta));
+
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al guardar venta: " + e.getMessage());
         }
