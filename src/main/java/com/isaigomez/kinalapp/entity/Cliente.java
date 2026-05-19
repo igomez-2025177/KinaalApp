@@ -1,6 +1,5 @@
 package com.isaigomez.kinalapp.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,24 +7,28 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "clientes")
-public class Cliente  {
+public class Cliente {
+
     @Id
     @Column(name = "dpi_cliente")
     private String DPICliente;
-    @Column
+
+    @Column(name = "nombre_cliente", nullable = false)
     private String nombreCliente;
-    @Column
+
+    @Column(name = "apellido_cliente", nullable = false)
     private String apellidoCliente;
-    @Column
+
+    @Column(nullable = false)
     private String direccion;
-    @Column
-    private int estado;
 
-    public Cliente(){
+    @Column(nullable = false)
+    private Integer estado;
 
+    public Cliente() {
     }
 
-    public Cliente(String DPICliente, String nombreCliente, String apellidoCliente, String direccion, int estado) {
+    public Cliente(String DPICliente, String nombreCliente, String apellidoCliente, String direccion, Integer estado) {
         this.DPICliente = DPICliente;
         this.nombreCliente = nombreCliente;
         this.apellidoCliente = apellidoCliente;
@@ -65,11 +68,11 @@ public class Cliente  {
         this.direccion = direccion;
     }
 
-    public int getEstado() {
+    public Integer getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(Integer estado) {
         this.estado = estado;
     }
 }

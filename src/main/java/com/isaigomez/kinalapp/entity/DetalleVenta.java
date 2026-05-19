@@ -11,81 +11,71 @@ public class DetalleVenta {
 
     @Id
     @Column(name = "codigo_detalle_venta")
-    private int codigoDetalleVenta;
+    private Integer codigoDetalleVenta;
 
-    @Column
-    private int cantidad;
+    @Column(nullable = false)
+    private Integer cantidad;
 
-    @Column(name = "precio_unitario")
-    private double precioUnitario;
+    @Column(name = "precio_unitario", nullable = false)
+    private Double precioUnitario;
 
-    @Column
-    private double subtotal;
+    @Column(nullable = false)
+    private Double subtotal;
 
-    @Column(name = "codigo_producto")
-    private int codigoProducto;
+    @Column(name = "codigo_producto", nullable = false)
+    private Integer codigoProducto;
 
-    @Column(name = "codigo_venta")
-    private int codigoVenta;
+    @Column(name = "codigo_venta", nullable = false)
+    private Integer codigoVenta;
 
     public DetalleVenta() {
-
     }
 
-    public DetalleVenta(int codigoDetalleVenta, int cantidad, double precioUnitario, double subtotal, int codigoProducto, int codigoVenta) {
-        this.codigoDetalleVenta = codigoDetalleVenta;
-        this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
-        this.subtotal = subtotal;
-        this.codigoProducto = codigoProducto;
-        this.codigoVenta = codigoVenta;
-    }
-
-    public int getCodigoDetalleVenta() {
+    public Integer getCodigoDetalleVenta() {
         return codigoDetalleVenta;
     }
 
-    public void setCodigoDetalleVenta(int codigoDetalleVenta) {
+    public void setCodigoDetalleVenta(Integer codigoDetalleVenta) {
         this.codigoDetalleVenta = codigoDetalleVenta;
     }
 
-    public int getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
-    public double getPrecioUnitario() {
+    public Double getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(double precioUnitario) {
+    public void setPrecioUnitario(Double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
-    public double getSubtotal() {
+    public Double getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(double subtotal) {
+    public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
     }
 
-    public int getCodigoProducto() {
+    public Integer getCodigoProducto() {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(int codigoProducto) {
+    public void setCodigoProducto(Integer codigoProducto) {
         this.codigoProducto = codigoProducto;
     }
 
-    public int getCodigoVenta() {
+    public Integer getCodigoVenta() {
         return codigoVenta;
     }
 
-    public void setCodigoVenta(int codigoVenta) {
+    public void setCodigoVenta(Integer codigoVenta) {
         this.codigoVenta = codigoVenta;
     }
 }
