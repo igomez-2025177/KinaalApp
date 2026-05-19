@@ -36,9 +36,20 @@ public class SecurityConfig {
                                 "/js/**",
                                 "/images/**"
                         ).permitAll()
+<<<<<<< Updated upstream
                         .requestMatchers("/usuarios-view").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/clientes-view", "/productos-view", "/ventas-view", "/detalleventa-view", "/index")
                         .hasAnyRole("ADMIN", "USER")
+=======
+                        .requestMatchers(
+                                "/index",
+                                "/usuarios-view",
+                                "/productos-view",
+                                "/ventas-view",
+                                "/detalleventa-view",
+                                "/clientes-view"
+                        ).hasAnyRole("ADMIN", "USER")
+>>>>>>> Stashed changes
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
