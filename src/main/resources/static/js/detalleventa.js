@@ -6,14 +6,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let modoEdicion = false;
     let idOriginal = null;
+    let rolUsuarioActual = "";
 
-    cargarDetalleVenta();
+    iniciar();
+
+    async function iniciar() {
+        await obtenerRolUsuarioActual();
+        await cargarDetalleVenta();
+    }
+
+    async function obtenerRolUsuarioActual() {
+        try {
+            const res = await fetch("/usuarios/rol");
+
+            if (!res.ok) {
+                throw new Error("No se pudo obtener el rol");
+            }
+
+            const data = await res.json();
+            rolUsuarioActual = (data.rol || "").toUpperCase();
+        } catch (error) {
+            console.error("Error al obtener rol:", error);
+            rolUsuarioActual = "";
+        }
+    }
 
     form?.addEventListener("submit", async function (e) {
         e.preventDefault();
 
+        if (modoEdicion && rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede actualizar detalle venta");
+            return;
+        }
+
         const detalle = {
-            codigoDetalleVenta: parseInt(document.getElementById("codigoDetalleVenta").value),
+            codigoDetalleVenta: document.getElementById("codigoDetalleVenta").value
+                ? parseInt(document.getElementById("codigoDetalleVenta").value)
+                : null,
             cantidad: parseInt(document.getElementById("cantidadDetalle").value),
             precioUnitario: parseFloat(document.getElementById("precioUnitarioDetalle").value),
             subtotal: parseFloat(document.getElementById("subtotalDetalle").value),
@@ -38,8 +67,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
+            const mensaje = await res.text();
+
             if (!res.ok) {
-                throw new Error("Error al guardar o actualizar detalle");
+                alert(mensaje || "Error al guardar o actualizar detalle");
+                return;
             }
 
             resetFormulario();
@@ -63,7 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const res = await fetch(`/detalleventa/${id}`);
 
             if (!res.ok) {
-                throw new Error("Detalle no encontrado");
+                const mensaje = await res.text();
+                alert(mensaje || "Detalle no encontrado");
+                return;
             }
 
             const d = await res.json();
@@ -75,10 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${formatearQuetzales(d.subtotal)}</td>
                     <td>${d.codigoProducto}</td>
                     <td>${d.codigoVenta}</td>
-                    <td>
-                        <button type="button" onclick="editarDetalleVenta(${d.codigoDetalleVenta}, ${d.cantidad}, ${d.precioUnitario}, ${d.subtotal}, ${d.codigoProducto}, ${d.codigoVenta})">Editar</button>
-                        <button type="button" onclick="eliminarDetalleVenta(${d.codigoDetalleVenta})">Eliminar</button>
-                    </td>
+                    <td>${renderAcciones(d)}</td>
                 </tr>
             `;
         } catch (error) {
@@ -90,6 +121,11 @@ document.addEventListener("DOMContentLoaded", function () {
     async function cargarDetalleVenta() {
         try {
             const res = await fetch("/detalleventa");
+
+            if (!res.ok) {
+                return;
+            }
+
             const data = await res.json();
             tabla.innerHTML = "";
 
@@ -102,16 +138,24 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${formatearQuetzales(d.subtotal)}</td>
                         <td>${d.codigoProducto}</td>
                         <td>${d.codigoVenta}</td>
-                        <td>
-                            <button type="button" onclick="editarDetalleVenta(${d.codigoDetalleVenta}, ${d.cantidad}, ${d.precioUnitario}, ${d.subtotal}, ${d.codigoProducto}, ${d.codigoVenta})">Editar</button>
-                            <button type="button" onclick="eliminarDetalleVenta(${d.codigoDetalleVenta})">Eliminar</button>
-                        </td>
+                        <td>${renderAcciones(d)}</td>
                     </tr>
                 `;
             });
         } catch (error) {
             console.error("Error al cargar detalle venta:", error);
         }
+    }
+
+    function renderAcciones(d) {
+        if (rolUsuarioActual !== "ADMIN") {
+            return "";
+        }
+
+        return `
+            <button type="button" onclick="editarDetalleVenta(${d.codigoDetalleVenta}, ${d.cantidad}, ${d.precioUnitario}, ${d.subtotal}, ${d.codigoProducto}, ${d.codigoVenta})">Editar</button>
+            <button type="button" onclick="eliminarDetalleVenta(${d.codigoDetalleVenta})">Eliminar</button>
+        `;
     }
 
     function formatearQuetzales(valor) {
@@ -127,6 +171,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     window.editarDetalleVenta = function (codigo, cantidad, precioUnitario, subtotal, codigoProducto, codigoVenta) {
+        if (rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede actualizar detalle venta");
+            return;
+        }
+
         document.getElementById("codigoDetalleVenta").value = codigo;
         document.getElementById("cantidadDetalle").value = cantidad;
         document.getElementById("precioUnitarioDetalle").value = precioUnitario;
@@ -141,6 +190,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     window.eliminarDetalleVenta = async function (codigo) {
+        if (rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede eliminar detalle venta");
+            return;
+        }
+
         const confirmado = confirm("¿Deseas eliminar este detalle de venta?");
 
         if (!confirmado) {
@@ -152,13 +206,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 method: "DELETE"
             });
 
-            if (res.status === 404) {
-                alert("El detalle no existe o ya fue eliminado");
-                return;
-            }
+            const mensaje = await res.text();
 
             if (!res.ok) {
-                throw new Error("No se pudo eliminar");
+                alert(mensaje || "Error al eliminar detalle de venta");
+                return;
             }
 
             await cargarDetalleVenta();

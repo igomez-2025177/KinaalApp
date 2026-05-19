@@ -6,18 +6,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let modoEdicion = false;
     let idOriginal = null;
+    let rolUsuarioActual = "";
 
-    cargarVentas();
+    iniciar();
+
+    async function iniciar() {
+        await obtenerRolUsuarioActual();
+        await cargarVentas();
+    }
+
+    async function obtenerRolUsuarioActual() {
+        try {
+            const res = await fetch("/usuarios/rol");
+
+            if (!res.ok) {
+                throw new Error("No se pudo obtener el rol");
+            }
+
+            const data = await res.json();
+            rolUsuarioActual = (data.rol || "").toUpperCase();
+        } catch (error) {
+            console.error("Error al obtener rol:", error);
+            rolUsuarioActual = "";
+        }
+    }
 
     form?.addEventListener("submit", async function (e) {
         e.preventDefault();
 
+        if (modoEdicion && rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede actualizar ventas");
+            return;
+        }
+
         const venta = {
-            codigoVenta: parseInt(document.getElementById("codigoVenta").value),
+            codigoVenta: document.getElementById("codigoVenta").value
+                ? parseInt(document.getElementById("codigoVenta").value)
+                : null,
             fechaVenta: document.getElementById("fechaVenta").value,
             total: parseFloat(document.getElementById("totalVenta").value),
             estado: parseInt(document.getElementById("estadoVenta").value),
-            dpiCliente: document.getElementById("dpiClienteVenta").value,
+            dpiCliente: document.getElementById("dpiClienteVenta").value.trim(),
             codigoUsuario: parseInt(document.getElementById("codigoUsuarioVenta").value)
         };
 
@@ -38,8 +67,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
+            const mensaje = await res.text();
+
             if (!res.ok) {
-                throw new Error("Error al guardar o actualizar venta");
+                alert(mensaje || "Error al guardar o actualizar venta");
+                return;
             }
 
             resetFormulario();
@@ -63,7 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const res = await fetch(`/ventas/${id}`);
 
             if (!res.ok) {
-                throw new Error("Venta no encontrada");
+                const mensaje = await res.text();
+                alert(mensaje || "Venta no encontrada");
+                return;
             }
 
             const v = await res.json();
@@ -75,10 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${mostrarEstado(v.estado)}</td>
                     <td>${v.dpiCliente}</td>
                     <td>${v.codigoUsuario}</td>
-                    <td>
-                        <button type="button" onclick="editarVenta(${v.codigoVenta}, '${formatearFecha(v.fechaVenta)}', ${v.total}, ${v.estado}, '${v.dpiCliente}', ${v.codigoUsuario})">Editar</button>
-                        <button type="button" onclick="eliminarVenta(${v.codigoVenta})">Eliminar</button>
-                    </td>
+                    <td>${renderAcciones(v)}</td>
                 </tr>
             `;
         } catch (error) {
@@ -90,6 +121,11 @@ document.addEventListener("DOMContentLoaded", function () {
     async function cargarVentas() {
         try {
             const res = await fetch("/ventas");
+
+            if (!res.ok) {
+                return;
+            }
+
             const data = await res.json();
             tabla.innerHTML = "";
 
@@ -102,10 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${mostrarEstado(v.estado)}</td>
                         <td>${v.dpiCliente}</td>
                         <td>${v.codigoUsuario}</td>
-                        <td>
-                            <button type="button" onclick="editarVenta(${v.codigoVenta}, '${formatearFecha(v.fechaVenta)}', ${v.total}, ${v.estado}, '${v.dpiCliente}', ${v.codigoUsuario})">Editar</button>
-                            <button type="button" onclick="eliminarVenta(${v.codigoVenta})">Eliminar</button>
-                        </td>
+                        <td>${renderAcciones(v)}</td>
                     </tr>
                 `;
             });
@@ -114,8 +147,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function renderAcciones(v) {
+        if (rolUsuarioActual !== "ADMIN") {
+            return "";
+        }
+
+        return `
+            <button type="button" onclick="editarVenta(${v.codigoVenta}, '${formatearFecha(v.fechaVenta)}', ${v.total}, ${v.estado}, '${v.dpiCliente}', ${v.codigoUsuario})">Editar</button>
+            <button type="button" onclick="eliminarVenta(${v.codigoVenta})">Eliminar</button>
+        `;
+    }
+
     function mostrarEstado(estado) {
-        return estado === 1 ? "Activo" : "Inactivo";
+        return Number(estado) === 1 ? "Activo" : "Inactivo";
     }
 
     function formatearQuetzales(total) {
@@ -124,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function formatearFecha(fecha) {
         if (!fecha) return "";
-        return fecha.split("T")[0];
+        return fecha.toString().split("T")[0];
     }
 
     function resetFormulario() {
@@ -136,6 +180,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     window.editarVenta = function (codigo, fecha, total, estado, dpiCliente, codigoUsuario) {
+        if (rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede actualizar ventas");
+            return;
+        }
+
         document.getElementById("codigoVenta").value = codigo;
         document.getElementById("fechaVenta").value = fecha;
         document.getElementById("totalVenta").value = total;
@@ -150,6 +199,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     window.eliminarVenta = async function (codigo) {
+        if (rolUsuarioActual !== "ADMIN") {
+            alert("Solo el administrador puede eliminar ventas");
+            return;
+        }
+
         const confirmado = confirm("¿Deseas eliminar esta venta?");
 
         if (!confirmado) {
@@ -161,13 +215,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 method: "DELETE"
             });
 
-            if (res.status === 404) {
-                alert("La venta no existe o ya fue eliminada");
-                return;
-            }
+            const mensaje = await res.text();
 
             if (!res.ok) {
-                throw new Error("No se pudo eliminar");
+                alert(mensaje || "Error al eliminar venta");
+                return;
             }
 
             await cargarVentas();

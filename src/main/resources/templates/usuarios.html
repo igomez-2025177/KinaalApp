@@ -24,16 +24,15 @@
             <h1>Usuarios</h1>
 
             <form class="form-grid" id="usuarioForm">
-                <input type="number" id="codigoUsuario" placeholder="Código Usuario" required>
+                <input type="number" id="codigoUsuario" placeholder="Código Usuario (autogenerado)" readonly>
                 <input type="text" id="usernameUsuario" placeholder="Username" required>
                 <input type="password" id="passwordUsuario" placeholder="Password" required>
                 <input type="email" id="emailUsuario" placeholder="Email" required>
 
                 <select id="rolUsuario" required>
                     <option value="">Seleccione rol</option>
-                    <option value="Administrador">Administrador</option>
-                    <option value="Vendedor">Vendedor</option>
-                    <option value="Supervisor">Supervisor</option>
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="USER">USER</option>
                 </select>
 
                 <select id="estadoUsuario" required>

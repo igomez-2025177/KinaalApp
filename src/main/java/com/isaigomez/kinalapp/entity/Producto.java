@@ -2,6 +2,8 @@ package com.isaigomez.kinalapp.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,25 +12,26 @@ import jakarta.persistence.Table;
 public class Producto {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_producto")
-    private int codigoProducto;
+    private Integer codigoProducto;
 
-    @Column(name = "nombre_producto")
+    @Column(name = "nombre_producto", nullable = false)
     private String nombreProducto;
 
-    @Column
-    private double precio;
+    @Column(nullable = false)
+    private Double precio;
 
-    @Column
-    private int stock;
+    @Column(nullable = false)
+    private Integer stock;
 
-    @Column
-    private int estado;
+    @Column(nullable = false)
+    private Integer estado;
 
     public Producto() {
     }
 
-    public Producto(int codigoProducto, String nombreProducto, double precio, int stock, int estado) {
+    public Producto(Integer codigoProducto, String nombreProducto, Double precio, Integer stock, Integer estado) {
         this.codigoProducto = codigoProducto;
         this.nombreProducto = nombreProducto;
         this.precio = precio;
@@ -36,11 +39,11 @@ public class Producto {
         this.estado = estado;
     }
 
-    public int getCodigoProducto() {
+    public Integer getCodigoProducto() {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(int codigoProducto) {
+    public void setCodigoProducto(Integer codigoProducto) {
         this.codigoProducto = codigoProducto;
     }
 
@@ -52,27 +55,27 @@ public class Producto {
         this.nombreProducto = nombreProducto;
     }
 
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
-    public int getEstado() {
+    public Integer getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(Integer estado) {
         this.estado = estado;
     }
 }
